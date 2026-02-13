@@ -68,9 +68,6 @@ services:
       - events
     networks:
       - default
-    ports:
-      - 80:80
-      - 443:443
     volumes:
       #- ./cert:/taiga-cert
       - ./conf/proxy:/taiga-conf
