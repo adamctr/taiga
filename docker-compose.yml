@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 services:
   back:
@@ -11,8 +11,8 @@ services:
     networks:
       - default
     volumes:
-      - ./data/media:/taiga-media
-      - ./conf/back:/taiga-conf
+      - taiga-media:/taiga-media
+      - taiga-back-conf:/taiga-conf
 
   front:
     image: dockertaiga/front:${VERSION}
@@ -21,7 +21,7 @@ services:
     networks:
       - default
     volumes:
-      - ./conf/front:/taiga-conf
+      - taiga-front-conf:/taiga-conf
 
   events:
     image: dockertaiga/events:${VERSION}
@@ -38,10 +38,8 @@ services:
     restart: unless-stopped
     networks:
       - default
-    env_file:
-      - variables.env
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - taiga-db-data:/var/lib/postgresql/data
 
   rabbit:
     image: dockertaiga/rabbit
@@ -51,7 +49,7 @@ services:
       - default
 
   proxy:
-    image: dockertaiga/proxy
+    image: dockertaiga/proxy:${VERSION}
     container_name: taiga-proxy
     restart: unless-stopped
     depends_on:
@@ -61,8 +59,14 @@ services:
     networks:
       - default
     volumes:
-      #- ./cert:/taiga-cert
-      - ./conf/proxy:/taiga-conf
+      - taiga-proxy-conf:/taiga-conf
 
 networks:
   default:
+
+volumes:
+  taiga-media:
+  taiga-back-conf:
+  taiga-front-conf:
+  taiga-db-data:
+  taiga-proxy-conf:
