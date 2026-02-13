@@ -13,8 +13,6 @@ services:
     volumes:
       - ./data/media:/taiga-media
       - ./conf/back:/taiga-conf
-    env_file:
-      - variables.env
 
   front:
     image: dockertaiga/front:${VERSION}
@@ -24,8 +22,6 @@ services:
       - default
     volumes:
       - ./conf/front:/taiga-conf
-    env_file:
-      - variables.env
 
   events:
     image: dockertaiga/events:${VERSION}
@@ -35,8 +31,6 @@ services:
       - rabbit
     networks:
       - default
-    env_file:
-      - variables.env
 
   db:
     image: postgres:12-alpine
@@ -55,8 +49,6 @@ services:
     restart: unless-stopped
     networks:
       - default
-    env_file:
-      - variables.env
 
   proxy:
     image: dockertaiga/proxy
@@ -71,8 +63,6 @@ services:
     volumes:
       #- ./cert:/taiga-cert
       - ./conf/proxy:/taiga-conf
-    env_file:
-      - variables.env
 
 networks:
   default:
