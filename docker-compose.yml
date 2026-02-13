@@ -15,9 +15,15 @@ services:
       - taiga-back-conf:/taiga-conf
     environment:
       - TAIGA_SECRET=${TAIGA_SECRET}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - RABBIT_PASSWORD=${RABBIT_PASSWORD}
       - TAIGA_HOST=${TAIGA_HOST}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PASSWORD=${RABBIT_PASSWORD}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_VHOST=${RABBIT_VHOST}
 
   front:
     image: dockertaiga/front:${VERSION}
@@ -40,6 +46,7 @@ services:
       - default
     environment:
       - RABBIT_PASSWORD=${RABBIT_PASSWORD}
+      - RABBIT_HOST=${RABBIT_HOST}
 
   db:
     image: postgres:12-alpine
@@ -47,7 +54,6 @@ services:
     restart: unless-stopped
     networks:
       - default
-    # C'EST ICI QUE CA SE PASSE :
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -63,6 +69,8 @@ services:
       - default
     environment:
       - RABBIT_PASSWORD=${RABBIT_PASSWORD}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_VHOST=${RABBIT_VHOST}
 
   proxy:
     image: dockertaiga/proxy:latest
