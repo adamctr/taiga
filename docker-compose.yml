@@ -49,7 +49,7 @@ services:
       - default
 
   proxy:
-    image: dockertaiga/proxy:${VERSION}
+    image: dockertaiga/proxy:latest
     container_name: taiga-proxy
     restart: unless-stopped
     depends_on:
